@@ -1,0 +1,12 @@
+name: Spinalvote
+main: com.spinalcraft.spinalvote.Spinalvote
+version: 1.0
+
+depend: [Spinalpack, Votifier]
+
+commands:
+  pop:
+    description: Pop.
+    usage: /pop
+    permission: spinalvote.pop
+    permission-message: You're not allowed to do that!
