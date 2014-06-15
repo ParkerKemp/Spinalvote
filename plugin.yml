@@ -5,8 +5,8 @@ version: 1.0
 depend: [Spinalpack, Votifier]
 
 commands:
-  pop:
-    description: Pop.
-    usage: /pop
-    permission: spinalvote.pop
-    permission-message: You're not allowed to do that!
+  vote:
+    description: Vote for the server on various websites.
+    usage: /vote
+    permission: spinalvote.vote
+    permission-message: No!
