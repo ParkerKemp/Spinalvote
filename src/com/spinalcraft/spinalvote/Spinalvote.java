@@ -27,13 +27,15 @@ public class Spinalvote extends JavaPlugin{
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 		if(cmd.getName().equalsIgnoreCase("vote")){
-			Player player = (Player)sender;
-			player.sendMessage(Spinalpack.code(Co.BLUE) + "You can support Spinalcraft by voting for us on different server lists. Currently we're listed on two websites:");
-			player.sendMessage(Spinalpack.code(Co.GOLD) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
-			player.sendMessage(Spinalpack.code(Co.BLUE) + "and");
-			player.sendMessage(Spinalpack.code(Co.GOLD) + "http://minecraft-server-list.com/server/177423/vote/");
-			player.sendMessage(Spinalpack.code(Co.BLUE) + "Each vote earns you 15 experience levels!");
-			return true;
+			if(sender instanceof Player){
+				Player player = (Player)sender;
+				player.sendMessage(Spinalpack.code(Co.BLUE) + "You can support Spinalcraft by voting for us on different server lists. Currently we're listed on two websites:");
+				player.sendMessage(Spinalpack.code(Co.GOLD) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
+				player.sendMessage(Spinalpack.code(Co.BLUE) + "and");
+				player.sendMessage(Spinalpack.code(Co.GOLD) + "http://minecraft-server-list.com/server/177423/vote/");
+				player.sendMessage(Spinalpack.code(Co.BLUE) + "Each vote earns you 15 experience levels!");
+				return true;
+			}
 		}
 		return false;
 	}
