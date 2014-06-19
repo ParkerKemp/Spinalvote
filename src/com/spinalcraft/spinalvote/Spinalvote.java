@@ -35,6 +35,7 @@ public class Spinalvote extends JavaPlugin{
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://minecraft-server-list.com/server/177423/vote/");
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "Each vote earns you 15 experience levels!");
+				player.sendMessage("");
 				return true;
 			}
 		}
