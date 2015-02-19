@@ -14,15 +14,22 @@ import com.spinalcraft.spinalpack.*;
 public class Spinalvote extends JavaPlugin{
 	
 	ConsoleCommandSender console;
+	SpinalvoteListener voteListener;
+	
 	
 	@Override
-	public void onEnable(){
-		
+	public void onEnable(){	
 		console = Bukkit.getConsoleSender();
 		
 		console.sendMessage(Spinalpack.code(Co.BLUE) + "Spinalvote online!");
-		getServer().getPluginManager().registerEvents((Listener)new SpinalvoteListener(this),  this);
-		Spinalpack.createVoteTable();
+		voteListener = new SpinalvoteListener(this);
+		getServer().getPluginManager().registerEvents((Listener)voteListener,  this);
+		createVoteTable();
+	}
+	
+	private void createVoteTable(){
+		String query = "CREATE TABLE IF NOT EXISTS Votes (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(31), date VARCHAR(63), service VARCHAR(63))";
+		Spinalpack.update(query);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
@@ -34,8 +41,15 @@ public class Spinalvote extends JavaPlugin{
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://minecraft-server-list.com/server/177423/vote/");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "Each vote earns you 15 experience levels!");
+				player.sendMessage(Spinalpack.code(Co.GREEN) + "Each vote earns you 24 exp bottles!");
 				player.sendMessage("");
+				return true;
+			}
+		}
+		if(cmd.getName().equalsIgnoreCase("testvote")){
+			if(sender instanceof Player){
+				Player player = (Player)sender;
+				voteListener.voteReward(player);
 				return true;
 			}
 		}

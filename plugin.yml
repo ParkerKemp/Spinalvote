@@ -10,3 +10,8 @@ commands:
     usage: /vote
     permission: spinalvote.vote
     permission-message: No!
+  testvote:
+    description: (Admin only) simulate a vote.
+    usage: /testvote
+    permission: spinalvote.testvote
+    permission-message: No!

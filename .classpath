@@ -2,9 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/Users/iamparker/Downloads/Votifier.jar"/>
-	<classpathentry kind="lib" path="/Users/iamparker/Downloads/bukkit-1.7.9-R0.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Spinalpack"/>
-	<classpathentry kind="lib" path="/Users/iamparker/Downloads/bukkit-1.7.9-R0.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Spinalpack/jars/craftbukkit-1.7.9-R0.2.jar"/>
+	<classpathentry kind="lib" path="X:/Java stuffs/jars/Votifier.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
