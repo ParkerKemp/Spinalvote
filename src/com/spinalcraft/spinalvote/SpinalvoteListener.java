@@ -29,34 +29,36 @@ public class SpinalvoteListener implements Listener{
 		this.plugin = plugin;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onVotifierEvent(VotifierEvent event){
 		processVote(event.getVote());
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void processVote(Vote vote){
 		String username = vote.getUsername();
-		String uuidString;
+		
+		String uuidString = null;
 		try {
 			UUID uuid = UUIDFetcher.getUUIDOf(username);
 			if(uuid != null)
 				uuidString = uuid.toString();
 			else{
 				plugin.console.sendMessage(ChatColor.RED + "Couldn't find UUID for user " + username + "!");
-				return;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
 		}
 		
-		Bukkit.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
 		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuidString);
+		
+		if(uuidString == null)
+			return;
+		
+		Bukkit.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
 		Player player;
-		if((player = Bukkit.getPlayer(vote.getUsername())) != null){
+		if((player = Bukkit.getPlayer(vote.getUsername())) != null)
 			voteReward(player);
-		}
 	}
 	
 	private void insertVoteRecord(String username, String timestamp, String service, String uuid){
