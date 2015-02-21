@@ -2,7 +2,7 @@ name: Spinalvote
 main: com.spinalcraft.spinalvote.Spinalvote
 version: 1.0
 
-depend: [Spinalpack, Votifier]
+depend: [Spinalpack, Votifier, UsernameHistory]
 
 commands:
   vote:

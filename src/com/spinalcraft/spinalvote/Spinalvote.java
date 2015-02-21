@@ -1,6 +1,7 @@
 package com.spinalcraft.spinalvote;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,9 +11,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import com.spinalcraft.spinalpack.*;
+import com.vexsoftware.votifier.model.Vote;
 
 public class Spinalvote extends JavaPlugin{
 	
+	public static final int NUM_WEBSITES = 2;
 	ConsoleCommandSender console;
 	SpinalvoteListener voteListener;
 	
@@ -21,14 +24,14 @@ public class Spinalvote extends JavaPlugin{
 	public void onEnable(){	
 		console = Bukkit.getConsoleSender();
 		
-		console.sendMessage(Spinalpack.code(Co.BLUE) + "Spinalvote online!");
+		console.sendMessage(ChatColor.BLUE + "Spinalvote online!");
 		voteListener = new SpinalvoteListener(this);
 		getServer().getPluginManager().registerEvents((Listener)voteListener,  this);
 		createVoteTable();
 	}
 	
 	private void createVoteTable(){
-		String query = "CREATE TABLE IF NOT EXISTS Votes (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(31), date VARCHAR(63), service VARCHAR(63))";
+		String query = "CREATE TABLE IF NOT EXISTS Votes (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(31), date VARCHAR(63), service VARCHAR(63), uuid VARCHAR(36))";
 		Spinalpack.update(query);
 	}
 	
@@ -49,7 +52,13 @@ public class Spinalvote extends JavaPlugin{
 		if(cmd.getName().equalsIgnoreCase("testvote")){
 			if(sender instanceof Player){
 				Player player = (Player)sender;
-				voteListener.voteReward(player);
+				
+				Vote vote = new Vote();
+				vote.setUsername(player.getName());
+				vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
+				vote.setServiceName("Test");
+				
+				voteListener.processVote(vote);
 				return true;
 			}
 		}
