@@ -1,5 +1,7 @@
 package com.spinalcraft.spinalvote;
 
+import java.io.IOException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +13,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import com.spinalcraft.spinalpack.*;
+import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.Vote;
 
 public class Spinalvote extends JavaPlugin{
@@ -44,7 +47,7 @@ public class Spinalvote extends JavaPlugin{
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://minecraft-server-list.com/server/177423/vote/");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "Each vote earns you 24 exp bottles!");
+				player.sendMessage(Spinalpack.code(Co.GREEN) + "Vote for both and get a long haste buff!");
 				player.sendMessage("");
 				return true;
 			}
@@ -61,6 +64,12 @@ public class Spinalvote extends JavaPlugin{
 				voteListener.processVote(vote);
 				return true;
 			}
+		}
+		if(cmd.getName().equalsIgnoreCase("consecutive")){
+			if(args.length == 0)
+				return false;
+			sender.sendMessage(args[0] + " voted " + voteListener.consecutiveDaysFromUsername(args[0]) + " consecutive days.");
+			return true;
 		}
 		return false;
 	}
