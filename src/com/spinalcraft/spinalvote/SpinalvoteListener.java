@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,8 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import com.spinalcraft.spinalpack.Spinalpack;
 import com.spinalcraft.usernamehistory.UUIDFetcher;
@@ -27,30 +26,36 @@ public class SpinalvoteListener implements Listener{
 	}
 	
 	@EventHandler(priority=EventPriority.NORMAL)
-	public void onVotifierEvent(VotifierEvent event){
-		processVote(event.getVote());
+	public void onVotifierEvent(final VotifierEvent event){
+		new Thread(){
+			public void run(){
+				processVote(event.getVote());
+			}
+		}.start();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void processVote(Vote vote){
 		String username = vote.getUsername();
-		String uuid = null;
+		UUID uuid = null;
+		String uuidString = null;
 		try {
 			uuid = UUIDFetcher.getUUIDOf(username);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(uuid == null)
+		if(uuid != null)
+			uuidString = uuid.toString();
+		else
 			plugin.console.sendMessage(ChatColor.RED + "Couldn't find UUID for user " + username + "!");
-		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuid);
+		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuidString);
 		
 		Bukkit.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
-		if(!completeVotes(uuid))
+		if(!completeVotes(uuidString))
 			return;
 		Player player;
-		if((player = Bukkit.getPlayer(username)) != null)
-			voteReward(player);
+		if((player = Bukkit.getPlayer(uuid)) != null)
+			sendVoteReward(player);
 	}
 	
 	private void insertVoteRecord(String username, String timestamp, String service, String uuid){
@@ -68,20 +73,10 @@ public class SpinalvoteListener implements Listener{
 		}
 	}
 	
-	public void voteReward(Player player){
+	public void sendVoteReward(Player player){
 		int multiplier = Math.min(12, consecutiveDays(player.getUniqueId().toString()));
 		
-		int hasteMinutes = 15 * multiplier;
-		player.removePotionEffect(PotionEffectType.FAST_DIGGING);
-		player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 60 * hasteMinutes, 1));
-		if(multiplier == 1){
-			player.sendMessage(ChatColor.BLUE + "Thanks for voting! You earned " + ChatColor.AQUA + "Haste" + ChatColor.BLUE + " for " + hasteMinutes + " minutes!");
-			player.sendMessage(ChatColor.BLUE + "(Vote again tomorrow and it will be longer!)");
-		}
-		else{
-			player.sendMessage(ChatColor.BLUE + "Thanks for voting! You earned " + ChatColor.AQUA + "Haste" + ChatColor.BLUE + " for a bonus " + hasteMinutes + " minutes!");
-			player.sendMessage(ChatColor.BLUE + "(The duration increases every day you vote, up to a maximum of 3 hours.)");
-		}
+		new VoteRewardTask(player, multiplier).runTask(this.plugin);
 	}
 	
 	private boolean completeVotes(String uuid){
@@ -90,9 +85,10 @@ public class SpinalvoteListener implements Listener{
 		String query = "SELECT COUNT(*) AS count FROM Votes WHERE uuid = ? AND DATEDIFF(FROM_UNIXTIME(date), NOW()) = 0";
 		try {
 			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			stmt.setString(1, uuid);
 			ResultSet rs = stmt.executeQuery();
 			rs.first();
-			return rs.getInt("count") == Spinalvote.NUM_WEBSITES;
+			return rs.getInt("count") >= Spinalvote.NUM_WEBSITES;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +96,7 @@ public class SpinalvoteListener implements Listener{
 	}
 	
 	public int consecutiveDaysFromUsername(String username){
-		String uuid = null;
+		UUID uuid = null;
 		try {
 			uuid = UUIDFetcher.getUUIDOf(username);
 		} catch (IOException e) {

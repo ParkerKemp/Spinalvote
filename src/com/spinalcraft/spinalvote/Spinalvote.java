@@ -1,7 +1,5 @@
 package com.spinalcraft.spinalvote;
 
-import java.io.IOException;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,8 +11,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import com.spinalcraft.spinalpack.*;
-import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.Vote;
+import com.vexsoftware.votifier.model.VotifierEvent;
 
 public class Spinalvote extends JavaPlugin{
 	
@@ -61,7 +59,7 @@ public class Spinalvote extends JavaPlugin{
 				vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
 				vote.setServiceName("Test");
 				
-				voteListener.processVote(vote);
+				Bukkit.getServer().getPluginManager().callEvent(new VotifierEvent(vote));
 				return true;
 			}
 		}
@@ -76,7 +74,6 @@ public class Spinalvote extends JavaPlugin{
 	
 	@Override
 	public void onDisable(){
-		//Unregister vote listener (to avoid duplication)
 		HandlerList.unregisterAll(this);
 	}
 }
