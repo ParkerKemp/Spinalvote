@@ -20,7 +20,6 @@ public class Spinalvote extends JavaPlugin{
 	ConsoleCommandSender console;
 	SpinalvoteListener voteListener;
 	
-	
 	@Override
 	public void onEnable(){	
 		console = Bukkit.getConsoleSender();
@@ -28,11 +27,14 @@ public class Spinalvote extends JavaPlugin{
 		console.sendMessage(ChatColor.BLUE + "Spinalvote online!");
 		voteListener = new SpinalvoteListener(this);
 		getServer().getPluginManager().registerEvents((Listener)voteListener,  this);
-		createVoteTable();
+		createVoteTables();
+		new Thread(new SocketListener(this)).start();
 	}
 	
-	private void createVoteTable(){
+	private void createVoteTables(){
 		String query = "CREATE TABLE IF NOT EXISTS Votes (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(31), date VARCHAR(63), service VARCHAR(63), uuid VARCHAR(36))";
+		Spinalpack.update(query);
+		query = "CREATE TABLE IF NOT EXISTS VoteRewards (hash VARCHAR(36) PRIMARY KEY, uuid VARCHAR(36), username VARCHAR(31), date VARCHAR(63), choice INT)";
 		Spinalpack.update(query);
 	}
 	
@@ -45,7 +47,7 @@ public class Spinalvote extends JavaPlugin{
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://minecraft-server-list.com/server/177423/vote/");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "Vote for both and get a long haste buff!");
+				player.sendMessage(Spinalpack.code(Co.GREEN) + "Vote for us on both sites and get a reward!");
 				player.sendMessage("");
 				return true;
 			}

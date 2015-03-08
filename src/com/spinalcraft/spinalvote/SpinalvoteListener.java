@@ -55,7 +55,7 @@ public class SpinalvoteListener implements Listener{
 			return;
 		Player player;
 		if((player = Bukkit.getPlayer(uuid)) != null)
-			sendVoteReward(player);
+			registerPendingReward(player);
 	}
 	
 	private void insertVoteRecord(String username, String timestamp, String service, String uuid){
@@ -73,10 +73,31 @@ public class SpinalvoteListener implements Listener{
 		}
 	}
 	
+	public void registerPendingReward(Player player){
+		String query = "INSERT INTO VoteRewards(hash, uuid, username, date, choice) VALUES (?, ?, ?, ?, 0)";
+		UUID hash = UUID.randomUUID();
+		try {
+			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			stmt.setString(1, hash.toString());
+			stmt.setString(2, player.getUniqueId().toString());
+			stmt.setString(3, player.getName());
+			stmt.setLong(4, System.currentTimeMillis());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		player.sendMessage(ChatColor.BLUE + "Thanks for voting! Choose your reward!");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.AQUA + "Click here for Haste II:");
+		player.sendMessage(ChatColor.MAGIC + "http://vote.spinalcraft.com?hash=" + hash.toString() + "&choice=1");
+		player.sendMessage(ChatColor.AQUA + "Click here for Exp Bottles:");
+		player.sendMessage(ChatColor.MAGIC + "http://vote.spinalcraft.com?hash=" + hash.toString() + "&choice=2");
+	}
+	
 	public void sendVoteReward(Player player){
 		int multiplier = Math.min(12, consecutiveDays(player.getUniqueId().toString()));
 		
-		new VoteRewardTask(player, multiplier).runTask(this.plugin);
+		new VoteRewardTask(player, 1, multiplier).runTask(this.plugin);
 	}
 	
 	private boolean completeVotes(String uuid){
@@ -107,7 +128,7 @@ public class SpinalvoteListener implements Listener{
 		return consecutiveDays(uuid.toString());
 	}
 	
-	private int consecutiveDays(String uuid){
+	public static int consecutiveDays(String uuid){
 		String query = "CALL CONSECUTIVEVOTES(?)";
 		int i = 1;
 		try {
@@ -115,7 +136,7 @@ public class SpinalvoteListener implements Listener{
 			stmt.setString(1, uuid);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next())
-				if(rs.getInt("dategap") == 1)
+				if(rs.getInt("hourgap") <= 36)
 					i++;
 				else
 					break;
