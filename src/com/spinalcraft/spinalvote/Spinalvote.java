@@ -44,9 +44,9 @@ public class Spinalvote extends JavaPlugin{
 				Player player = (Player)sender;
 				player.sendMessage("");
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "You can support Spinalcraft by voting for us on different server lists. Currently we're listed on two websites:");
-				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
 				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://minecraft-server-list.com/server/177423/vote/");
+				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
+				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
 				player.sendMessage(Spinalpack.code(Co.GREEN) + "Vote for us on both sites and get a reward!");
 				player.sendMessage("");
 				return true;
