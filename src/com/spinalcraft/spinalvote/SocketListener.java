@@ -28,6 +28,7 @@ public class SocketListener implements Runnable {
 	@Override
 	public void run() {
 		File socketFile = new File(System.getProperty("user.dir") + "/plugins/Spinalpack/sockets/vote.sock");
+		socketFile.delete();
 		
 		AFUNIXServerSocket server;
 		try {
