@@ -1,5 +1,8 @@
 package com.spinalcraft.spinalvote;
 
+import main.java.com.spinalcraft.spinalpack.Co;
+import main.java.com.spinalcraft.spinalpack.Spinalpack;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-import com.spinalcraft.spinalpack.*;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 
