@@ -78,7 +78,9 @@ public class SocketListener implements Runnable {
 				sendVoteReward(player, choice);
 				setChoice(hash, choice);
 
-			} catch (IOException | SQLException e) {
+			} catch (IOException e){
+				e.printStackTrace();
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
