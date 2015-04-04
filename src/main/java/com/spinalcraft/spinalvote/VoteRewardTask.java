@@ -1,4 +1,4 @@
-package com.spinalcraft.spinalvote;
+package main.java.com.spinalcraft.spinalvote;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -49,21 +49,6 @@ public class VoteRewardTask extends BukkitRunnable {
 			PlayerInventory inv = player.getInventory();
 			inv.addItem(new ItemStack(Material.EXP_BOTTLE, 48));
 			player.sendMessage(ChatColor.BLUE + "You earned 48 exp bottles!");
-			/*if (multiplier == 1) {
-				player.sendMessage(ChatColor.BLUE
-						+ "Thanks for voting! You earned " + ChatColor.AQUA
-						+ "Haste II" + ChatColor.BLUE + " for " + hasteMinutes
-						+ " minutes!");
-				player.sendMessage(ChatColor.BLUE
-						+ "(Vote again tomorrow and it will be longer!)");
-			} else {
-				player.sendMessage(ChatColor.BLUE
-						+ "Thanks for voting! You earned " + ChatColor.AQUA
-						+ "Haste II" + ChatColor.BLUE + " for " + hasteMinutes
-						+ " minutes!");
-				player.sendMessage(ChatColor.BLUE
-						+ "(The duration increases every day you vote, up to a maximum of 3 hours.)");
-			}*/
 			break;
 		}
 	}

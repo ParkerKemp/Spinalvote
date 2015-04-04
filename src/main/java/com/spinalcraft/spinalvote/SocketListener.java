@@ -1,4 +1,4 @@
-package com.spinalcraft.spinalvote;
+package main.java.com.spinalcraft.spinalvote;
 
 import java.io.File;
 import java.io.IOException;

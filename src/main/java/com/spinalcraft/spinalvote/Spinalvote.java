@@ -1,4 +1,4 @@
-package com.spinalcraft.spinalvote;
+package main.java.com.spinalcraft.spinalvote;
 
 import main.java.com.spinalcraft.spinalpack.Co;
 import main.java.com.spinalcraft.spinalpack.Spinalpack;
