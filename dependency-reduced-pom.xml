@@ -48,6 +48,10 @@
       <id>votifier-repo</id>
       <url>http://repo.howaner.de</url>
     </repository>
+    <repository>
+      <id>spinalcraft-repo</id>
+      <url>http://maven.spinalcraft.com</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
