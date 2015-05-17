@@ -1,4 +1,4 @@
-package main.java.com.spinalcraft.spinalvote;
+package com.spinalcraft.spinalvote;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

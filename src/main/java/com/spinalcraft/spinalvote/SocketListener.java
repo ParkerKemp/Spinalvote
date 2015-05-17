@@ -1,4 +1,4 @@
-package main.java.com.spinalcraft.spinalvote;
+package com.spinalcraft.spinalvote;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import main.java.com.spinalcraft.spinalpack.Spinalpack;
+import com.spinalcraft.spinalpack.Spinalpack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

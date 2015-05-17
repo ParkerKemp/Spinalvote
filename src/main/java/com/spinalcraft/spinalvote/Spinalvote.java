@@ -1,7 +1,7 @@
-package main.java.com.spinalcraft.spinalvote;
+package com.spinalcraft.spinalvote;
 
-import main.java.com.spinalcraft.spinalpack.Co;
-import main.java.com.spinalcraft.spinalpack.Spinalpack;
+import com.spinalcraft.spinalpack.Co;
+import com.spinalcraft.spinalpack.Spinalpack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
