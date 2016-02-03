@@ -82,6 +82,8 @@ public class SocketListener implements Runnable {
 				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (NullPointerException e){
+				e.printStackTrace();
 			}
 		}
 	}
