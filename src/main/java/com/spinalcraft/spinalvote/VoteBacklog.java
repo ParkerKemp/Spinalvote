@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.bukkit.Color;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.spinalcraft.spinalpack.Spinalpack;
@@ -35,7 +35,7 @@ public class VoteBacklog implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		player.sendMessage(Color.BLUE + "You have " + count + " unclaimed vote " + number + "! Use " + Color.AQUA + "/claimvote" + Color.BLUE + " to claim " + pronoun + "!");
+		player.sendMessage(ChatColor.BLUE + "You have " + count + " unclaimed vote " + number + "! Use " + ChatColor.AQUA + "/claimvote" + ChatColor.BLUE + " to claim " + pronoun + "!");
 	}
 	
 	private int getCount(){
