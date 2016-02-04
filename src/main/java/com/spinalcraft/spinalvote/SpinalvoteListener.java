@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.VotifierEvent;
@@ -33,6 +34,11 @@ public class SpinalvoteListener implements Listener{
 				processVote(event.getVote());
 			}
 		}.start();
+	}
+	
+	@EventHandler(priority=EventPriority.NORMAL)
+	public void onPlayerLoginEvent(final PlayerLoginEvent event){
+		new Thread(new VoteBacklog(event.getPlayer())).start();
 	}
 	
 	public void processVote(Vote vote){
