@@ -100,9 +100,9 @@ public class SpinalvoteListener implements Listener{
 		player.sendMessage(ChatColor.BLUE + "Thanks for voting! Choose your reward!");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.AQUA + "Click here for Haste II:");
-		player.sendMessage(ChatColor.MAGIC + "http://votedev.spinalcraft.com?hash=" + hash.toString() + "&choice=1");
+		player.sendMessage(ChatColor.MAGIC + "http://vote.spinalcraft.com?hash=" + hash.toString() + "&choice=1");
 		player.sendMessage(ChatColor.AQUA + "Click here for Exp Bottles:");
-		player.sendMessage(ChatColor.MAGIC + "http://votedev.spinalcraft.com?hash=" + hash.toString() + "&choice=2");
+		player.sendMessage(ChatColor.MAGIC + "http://vote.spinalcraft.com?hash=" + hash.toString() + "&choice=2");
 	}
 	
 	public void sendVoteReward(Player player){
