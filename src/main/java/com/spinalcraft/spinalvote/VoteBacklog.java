@@ -57,13 +57,14 @@ public class VoteBacklog implements Runnable{
 
 	public static String getRewardHash(Player player){
 		String uuid = player.getUniqueId().toString();
-		String query = "SELECT hash FROM VoteRewards WHERE uuid = ?";
+		String query = "SELECT hash FROM VoteRewards WHERE uuid = ? AND choice = 0";
 		String hash = null;
 		try {
 			PreparedStatement stmt = Spinalpack.prepareStatement(query);
 			stmt.setString(1, uuid);
 			ResultSet rs = stmt.executeQuery();
-			rs.first();
+			if(!rs.first())
+				return null;
 			hash = rs.getString("hash");
 		} catch (SQLException e) {
 			e.printStackTrace();
