@@ -29,13 +29,14 @@ public class VoteBacklog implements Runnable{
 	private void reportBacklog(int count){
 		String number = (count > 1) ? "rewards" : "reward";
 		String pronoun = (count > 1) ? "them" : "it";
+		String postfix = (count > 1) ? ", one at a time, " : "";
 		
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		player.sendMessage(ChatColor.GREEN + "You have " + count + " unclaimed vote " + number + "! Use " + ChatColor.AQUA + "/claimreward" + ChatColor.GREEN + " to claim " + pronoun + "!");
+		player.sendMessage(ChatColor.GREEN + "You have " + count + " unclaimed vote " + number + "! You can claim " + pronoun + " at any time" + postfix + " using " + ChatColor.AQUA + "/claimreward" + ChatColor.GREEN + "!");
 	}
 	
 	private int getCount(){
