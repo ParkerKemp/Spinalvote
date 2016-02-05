@@ -54,6 +54,19 @@ public class Spinalvote extends JavaPlugin{
 				return true;
 			}
 		}
+		if(cmd.getName().equalsIgnoreCase("claimreward")){
+			if(sender instanceof Player){
+				Player player = (Player)sender;
+				String hash = VoteBacklog.getRewardHash(player);
+				if(hash == null){
+					player.sendMessage(ChatColor.RED + "You have no unclaimed votes!");
+					return true;
+				}
+				SpinalvoteListener.notifyPendingReward(player, hash);
+				return true;
+			}
+			return false;
+		}
 		if(cmd.getName().equalsIgnoreCase("testvote")){
 			if(sender instanceof Player){
 				Player player = (Player)sender;

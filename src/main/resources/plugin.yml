@@ -17,3 +17,8 @@ commands:
     permission-message: No!
   consecutive:
     permission: spinalvote.consecutive
+  claimreward:
+  	description: Claim your reward for a previous vote.
+  	usage: /claimreward
+  	permission: spinalvote.claimreward
+  	permission-message: No!

@@ -93,6 +93,10 @@ public class SpinalvoteListener implements Listener{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		notifyPendingReward(player, hash.toString());
+	}
+	
+	public static void notifyPendingReward(Player player, String hash){
 		player.sendMessage(ChatColor.BLUE + "Thanks for voting! Choose your reward!");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.AQUA + "Click here for Haste II:");

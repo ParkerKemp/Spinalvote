@@ -35,7 +35,7 @@ public class VoteBacklog implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		player.sendMessage(ChatColor.BLUE + "You have " + count + " unclaimed vote " + number + "! Use " + ChatColor.AQUA + "/claimvote" + ChatColor.BLUE + " to claim " + pronoun + "!");
+		player.sendMessage(ChatColor.GREEN + "You have " + count + " unclaimed vote " + number + "! Use " + ChatColor.AQUA + "/claimreward" + ChatColor.GREEN + " to claim " + pronoun + "!");
 	}
 	
 	private int getCount(){
@@ -55,4 +55,22 @@ public class VoteBacklog implements Runnable{
 		return count;
 	}
 
+	public static String getRewardHash(Player player){
+		String uuid = player.getUniqueId().toString();
+		String query = "SELECT hash FROM VoteRewards WHERE uuid = ?";
+		String hash = null;
+		try {
+			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			stmt.setString(1, uuid);
+			ResultSet rs = stmt.executeQuery();
+			rs.first();
+			hash = rs.getString("hash");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return hash;
+	}
 }
+
+
+
