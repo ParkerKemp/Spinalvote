@@ -1,6 +1,10 @@
 package com.spinalcraft.spinalvote;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +16,7 @@ import org.bukkit.entity.Player;
 
 import com.spinalcraft.spinalpack.Co;
 import com.spinalcraft.spinalpack.Spinalpack;
+import com.spinalcraft.spinalvote.VoteRaffle.Winner;
 import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
@@ -84,6 +89,52 @@ public class VoteCommandExecutor implements CommandExecutor{
 				return false;
 			sender.sendMessage(args[0] + " voted " + listener.consecutiveDaysFromUsername(args[0]) + " consecutive days.");
 			return true;
+		}
+		if(cmd.getName().equalsIgnoreCase("voteraffle")){
+			if(sender instanceof Player || sender instanceof ConsoleCommandSender){
+				if (args.length < 2){
+					return false;
+				}
+				int month = Integer.parseInt(args[0]);
+				int year = Integer.parseInt(args[1]);
+				int cap = VoteRaffle.NO_CAP;
+				if (args.length >= 3){
+					cap = Integer.parseInt(args[2]);
+					if (cap < 0){
+						sender.sendMessage("Value of cap must be positive");
+						return true;
+					}
+				}
+				if (month < 1 || month > 12){
+					sender.sendMessage("Value of month must be numerical between 1 and 12");
+					return true;
+				}
+				if (year < 2000){
+					sender.sendMessage("Value of year must be bigger than 2000");
+					return true;
+				}
+				String query = "SELECT username, c FROM (SELECT username, uuid, COUNT(*) as c " + "FROM Votes " + "WHERE MONTH(FROM_UNIXTIME(date)) = ? AND YEAR(FROM_UNIXTIME(DATE)) = ? AND uuid IS NOT NULL " + "GROUP BY uuid " + "ORDER BY username) as V";
+				
+				try {
+					PreparedStatement stmt = Spinalpack.prepareStatement(query);
+					stmt.setInt(1, month);
+					stmt.setInt(2, year);
+					ResultSet rs = stmt.executeQuery();
+					HashMap<String, Integer> hashmap = new HashMap<String, Integer>();
+					while (rs.next()) {
+						hashmap.put(rs.getString("username"), rs.getInt("c"));
+					}
+					Winner winner = VoteRaffle.pullWinner(hashmap, cap);
+					if (winner == null){
+						sender.sendMessage("There aren't any votes for the chosen month");
+					} else {
+						sender.sendMessage("The winner is " + winner.username + " with " + winner.votes + " votes and " + String.format("%.03f", winner.probability) + "% probability");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return true;
+			}
 		}
 		return false;
 	}
