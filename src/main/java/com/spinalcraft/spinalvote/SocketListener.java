@@ -10,12 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import com.spinalcraft.spinalpack.Spinalpack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.newsclub.net.unix.AFUNIXServerSocket;
 import org.newsclub.net.unix.AFUNIXSocketAddress;
+
+import com.spinalcraft.spinalpack.Spinalpack;
 
 public class SocketListener implements Runnable {
 	private Spinalvote plugin;
