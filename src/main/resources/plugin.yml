@@ -25,5 +25,5 @@ commands:
   voteraffle:
     description: Pull a winner for this months vote raffle
     usage: /voteraffle [month#] [year] <cap> to pull the winner of chosen [month] and [year], optionally with a lower limit of <cap> votes
-    permission: spinalvote.rafflepull
+    permission: spinalvote.voteraffle
     permission-message: No!
