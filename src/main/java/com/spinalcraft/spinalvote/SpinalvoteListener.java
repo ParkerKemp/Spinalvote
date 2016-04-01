@@ -60,9 +60,7 @@ public class SpinalvoteListener implements Listener{
 		Bukkit.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
 		if(!completeVotes(uuidString))
 			return;
-		Player player;
-		if((player = Bukkit.getPlayer(uuid)) != null)
-			registerPendingReward(player);
+		registerPendingReward(username, uuid);
 	}
 	
 	private void insertVoteRecord(String username, String timestamp, String service, String uuid){
@@ -80,20 +78,24 @@ public class SpinalvoteListener implements Listener{
 		}
 	}
 	
-	public void registerPendingReward(Player player){
+	public void registerPendingReward(String username, UUID uuid){
 		String query = "INSERT INTO VoteRewards(hash, uuid, username, date, choice) VALUES (?, ?, ?, ?, 0)";
 		UUID hash = UUID.randomUUID();
 		try {
 			PreparedStatement stmt = Spinalpack.prepareStatement(query);
 			stmt.setString(1, hash.toString());
-			stmt.setString(2, player.getUniqueId().toString());
-			stmt.setString(3, player.getName());
+			stmt.setString(2, uuid.toString());
+			stmt.setString(3, username);
 			stmt.setLong(4, System.currentTimeMillis());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		notifyPendingReward(player, hash.toString());
+		
+		Player player = Bukkit.getPlayer(uuid);
+		if (player != null){
+			notifyPendingReward(player, hash.toString());
+		}
 	}
 	
 	public static void notifyPendingReward(Player player, String hash){

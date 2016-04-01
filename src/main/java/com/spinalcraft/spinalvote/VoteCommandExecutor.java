@@ -1,14 +1,18 @@
 package com.spinalcraft.spinalvote;
 
+import java.io.IOException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import com.spinalcraft.spinalpack.Co;
 import com.spinalcraft.spinalpack.Spinalpack;
+import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 
@@ -48,11 +52,26 @@ public class VoteCommandExecutor implements CommandExecutor{
 			return false;
 		}
 		if(cmd.getName().equalsIgnoreCase("testvote")){
-			if(sender instanceof Player){
-				Player player = (Player)sender;
-				
+			if(sender instanceof Player || sender instanceof ConsoleCommandSender){
 				Vote vote = new Vote();
-				vote.setUsername(player.getName());
+				
+				if (sender instanceof Player){
+					Player player = (Player)sender;
+					vote.setUsername(player.getName());
+				} else {
+					if (args.length < 1){
+						return false;
+					}
+					try {
+						if (UUIDFetcher.getUUIDOf(args[0]) == null){
+							sender.sendMessage(args[0] + " is not a valid player name!");
+							return true;
+						};
+					} catch (IOException e) {}
+					
+					vote.setUsername(args[0]);
+				}
+				
 				vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
 				vote.setServiceName("Test");
 				
