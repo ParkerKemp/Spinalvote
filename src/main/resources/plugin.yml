@@ -12,7 +12,7 @@ commands:
     permission-message: No!
   testvote:
     description: (Admin only) simulate a vote.
-    usage: /testvote
+    usage: /testvote [player]
     permission: spinalvote.testvote
     permission-message: No!
   consecutive:
@@ -24,6 +24,6 @@ commands:
     permission-message: No!
   voteraffle:
     description: Pull a winner for this months vote raffle
-    usage: /voteraffle [month#] [year] <cap> to pull the winner of chosen [month] and [year], optionally with a lower limit of <cap> votes
+    usage: /voteraffle <month#> <year> [cap] to pull the winner of chosen <month> and <year>, optionally with a lower limit of [cap] votes
     permission: spinalvote.voteraffle
     permission-message: No!
