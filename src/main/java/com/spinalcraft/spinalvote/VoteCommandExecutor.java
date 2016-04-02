@@ -67,12 +67,12 @@ public class VoteCommandExecutor implements CommandExecutor{
 					if (args.length < 1){
 						return false;
 					}
-					try {
-						if (UUIDFetcher.getUUIDOf(args[0]) == null){
-							sender.sendMessage(args[0] + " is not a valid player name!");
-							return true;
-						};
-					} catch (IOException e) {}
+//					try {
+//						if (UUIDFetcher.getUUIDOf(args[0]) == null){
+//							sender.sendMessage(args[0] + " is not a valid player name!");
+////							return true;
+//						};
+//					} catch (IOException e) {}
 					
 					vote.setUsername(args[0]);
 				}
