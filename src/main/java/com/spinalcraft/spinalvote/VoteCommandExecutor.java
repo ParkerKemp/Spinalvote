@@ -57,32 +57,30 @@ public class VoteCommandExecutor implements CommandExecutor{
 			return false;
 		}
 		if(cmd.getName().equalsIgnoreCase("testvote")){
-			if(sender instanceof Player || sender instanceof ConsoleCommandSender){
-				Vote vote = new Vote();
-				
-				if (sender instanceof Player){
-					Player player = (Player)sender;
-					vote.setUsername(player.getName());
-				} else {
-					if (args.length < 1){
-						return false;
-					}
-//					try {
-//						if (UUIDFetcher.getUUIDOf(args[0]) == null){
-//							sender.sendMessage(args[0] + " is not a valid player name!");
-////							return true;
-//						};
-//					} catch (IOException e) {}
-					
-					vote.setUsername(args[0]);
+			Vote vote = new Vote();
+			
+			if (sender instanceof Player){
+				Player player = (Player)sender;
+				vote.setUsername(player.getName());
+			} else {
+				if (args.length < 1){
+					return false;
 				}
+				try {
+					if (UUIDFetcher.getUUIDOf(args[0]) == null){
+						sender.sendMessage(args[0] + " is not a valid player name!");
+						return true;
+					};
+				} catch (IOException e) {}
 				
-				vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
-				vote.setServiceName("Test");
-				
-				Bukkit.getServer().getPluginManager().callEvent(new VotifierEvent(vote));
-				return true;
+				vote.setUsername(args[0]);
 			}
+			
+			vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
+			vote.setServiceName("Test");
+			
+			Bukkit.getServer().getPluginManager().callEvent(new VotifierEvent(vote));
+			return true;
 		}
 		if(cmd.getName().equalsIgnoreCase("consecutive")){
 			if(args.length == 0)
