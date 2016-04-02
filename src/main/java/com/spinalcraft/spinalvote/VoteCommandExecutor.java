@@ -29,7 +29,7 @@ public class VoteCommandExecutor implements CommandExecutor{
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 		if(cmd.getName().equalsIgnoreCase("vote")){
 			if(sender instanceof Player){
 				Player player = (Player)sender;
@@ -62,24 +62,18 @@ public class VoteCommandExecutor implements CommandExecutor{
 			if (sender instanceof Player){
 				Player player = (Player)sender;
 				vote.setUsername(player.getName());
+				sendTestVote(vote);
 			} else {
 				if (args.length < 1){
 					return false;
 				}
-				try {
-					if (UUIDFetcher.getUUIDOf(args[0]) == null){
-						sender.sendMessage(args[0] + " is not a valid player name!");
-						return true;
-					};
-				} catch (IOException e) {}
-				
-				vote.setUsername(args[0]);
+				new Thread(new Runnable(){
+					@Override
+					public void run(){
+						testVoteByUsername(args[0], sender);
+					}
+				}).run();
 			}
-			
-			vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
-			vote.setServiceName("Test");
-			
-			Bukkit.getServer().getPluginManager().callEvent(new VotifierEvent(vote));
 			return true;
 		}
 		if(cmd.getName().equalsIgnoreCase("consecutive")){
@@ -135,5 +129,27 @@ public class VoteCommandExecutor implements CommandExecutor{
 			}
 		}
 		return false;
+	}
+	
+	private void testVoteByUsername(String username, CommandSender sender){
+		Vote vote = new Vote();
+		
+		try {
+			if (UUIDFetcher.getUUIDOf(username) == null){
+				sender.sendMessage(username + " is not a valid player name!");
+				return;
+			};
+		} catch (IOException e) {}
+		
+		vote.setUsername(username);
+
+		sendTestVote(vote);
+	}
+	
+	private void sendTestVote(Vote vote){
+		vote.setTimeStamp(String.valueOf(System.currentTimeMillis() / 1000));
+		vote.setServiceName("Test");
+		
+		Bukkit.getServer().getPluginManager().callEvent(new VotifierEvent(vote));
 	}
 }
