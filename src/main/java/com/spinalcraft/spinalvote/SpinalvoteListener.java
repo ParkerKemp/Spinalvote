@@ -58,6 +58,8 @@ public class SpinalvoteListener implements Listener{
 		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuidString);
 		
 		Bukkit.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
+		if(uuid == null)
+			return;
 		if(!completeVotes(uuidString))
 			return;
 		registerPendingReward(username, uuid);
