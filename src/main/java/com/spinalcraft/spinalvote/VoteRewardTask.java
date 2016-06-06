@@ -1,5 +1,7 @@
 package com.spinalcraft.spinalvote;
 
+import java.util.HashMap;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,7 +49,12 @@ public class VoteRewardTask extends BukkitRunnable {
 			break;
 		case 2:
 			PlayerInventory inv = player.getInventory();
-			inv.addItem(new ItemStack(Material.EXP_BOTTLE, 48));
+			HashMap<Integer, ItemStack> map = inv.addItem(new ItemStack(Material.EXP_BOTTLE, 48));
+			if (!map.isEmpty()){
+				for (ItemStack stack : map.values()){
+					player.getWorld().dropItemNaturally(player.getLocation(), stack);
+				}
+			}
 			player.sendMessage(ChatColor.BLUE + "You earned 48 exp bottles!");
 			break;
 		}
