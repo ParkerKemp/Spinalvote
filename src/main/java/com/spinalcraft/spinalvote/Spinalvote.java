@@ -33,6 +33,7 @@ public class Spinalvote extends JavaPlugin{
 		getCommand("consecutive").setExecutor(executor);
 		getCommand("claimreward").setExecutor(executor);
 		getCommand("voteraffle").setExecutor(executor);
+		//getCommand("testgive").setExecutor(executor);
 	}
 	
 	private void createVoteTables(){

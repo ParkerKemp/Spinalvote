@@ -82,6 +82,14 @@ public class VoteCommandExecutor implements CommandExecutor{
 			sender.sendMessage(args[0] + " voted " + listener.consecutiveDaysFromUsername(args[0]) + " consecutive days.");
 			return true;
 		}
+		/*
+		if(cmd.getName().equalsIgnoreCase("testgive")){
+			if (sender instanceof Player){
+				new VoteRewardTask((Player) sender, 2, 0).runTask(sender.getServer().getPluginManager().getPlugin("Spinalvote"));
+			}
+			return true;
+		}
+		*/
 		if(cmd.getName().equalsIgnoreCase("voteraffle")){
 			if(sender instanceof Player || sender instanceof ConsoleCommandSender){
 				if (args.length < 2){
