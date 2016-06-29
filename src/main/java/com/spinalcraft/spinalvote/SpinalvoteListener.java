@@ -57,7 +57,10 @@ public class SpinalvoteListener implements Listener{
 			plugin.console.sendMessage(ChatColor.RED + "Couldn't find UUID for user " + username + "!");
 		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuidString);
 		
-		Bukkit.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
+		Spinalpack spinalPack = (Spinalpack) Bukkit.getPluginManager().getPlugin("Spinalpack");
+		if (spinalPack != null){
+			spinalPack.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
+		}
 		if(uuid == null)
 			return;
 		if(!completeVotes(uuidString))
