@@ -64,7 +64,7 @@ public class SpinalvoteListener implements Listener{
 			return;
 		
 		if (spinalPack != null){
-			spinalPack.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
+			spinalPack.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft! Type /vote to do the same and get a reward!");
 		}
 		
 		registerPendingReward(username, uuid);
