@@ -58,13 +58,15 @@ public class SpinalvoteListener implements Listener{
 		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuidString);
 		
 		Spinalpack spinalPack = (Spinalpack) Bukkit.getPluginManager().getPlugin("Spinalpack");
-		if (spinalPack != null){
-			spinalPack.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
-		}
 		if(uuid == null)
 			return;
 		if(!completeVotes(uuidString))
 			return;
+		
+		if (spinalPack != null){
+			spinalPack.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft!");
+		}
+		
 		registerPendingReward(username, uuid);
 	}
 	
