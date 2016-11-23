@@ -147,7 +147,10 @@ public class VoteCommandExecutor implements CommandExecutor{
 				sender.sendMessage(username + " is not a valid player name!");
 				return;
 			};
-		} catch (IOException e) {}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 		
 		vote.setUsername(username);
 
