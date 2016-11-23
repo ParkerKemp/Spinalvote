@@ -75,6 +75,7 @@
 							<artifactSet>
 								<includes>
 									<include>org.newsclub:junixsocket</include>
+									<include>com.spinalcraft:Spinalpack</include>
 								</includes>
 							</artifactSet>
 						</configuration>
