@@ -14,7 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import com.spinalcraft.spinalpack.Spinalpack;
 import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.VotifierEvent;
 
@@ -51,21 +50,20 @@ public class SpinalvoteListener implements Listener{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		if(uuid != null)
 			uuidString = uuid.toString();
 		else
 			plugin.console.sendMessage(ChatColor.RED + "Couldn't find UUID for user " + username + "!");
+		
 		insertVoteRecord(username, vote.getTimeStamp(), vote.getServiceName(), uuidString);
 		
-		Spinalpack spinalPack = (Spinalpack) Bukkit.getPluginManager().getPlugin("Spinalpack");
 		if(uuid == null)
 			return;
 		if(!completeVotes(uuidString))
 			return;
 		
-		if (spinalPack != null){
-			spinalPack.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft! Type /vote to do the same and get a reward!");
-		}
+		plugin.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft! Type /vote to do the same and get a reward!");
 		
 		registerPendingReward(username, uuid);
 	}
@@ -74,7 +72,7 @@ public class SpinalvoteListener implements Listener{
 		String query;
 		query = "INSERT INTO Votes(username, date, service, uuid) values(?, ?, ?, ?)";
 		try {
-			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			PreparedStatement stmt = Spinalvote.prepareStatement(query);
 			stmt.setString(1, username);
 			stmt.setString(2, timestamp);
 			stmt.setString(3, service);
@@ -89,7 +87,7 @@ public class SpinalvoteListener implements Listener{
 		String query = "INSERT INTO VoteRewards(hash, uuid, username, date, choice) VALUES (?, ?, ?, ?, 0)";
 		UUID hash = UUID.randomUUID();
 		try {
-			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			PreparedStatement stmt = Spinalvote.prepareStatement(query);
 			stmt.setString(1, hash.toString());
 			stmt.setString(2, uuid.toString());
 			stmt.setString(3, username);
@@ -125,7 +123,7 @@ public class SpinalvoteListener implements Listener{
 		
 		String query = "SELECT COUNT(*) AS count FROM Votes WHERE uuid = ? AND DATEDIFF(FROM_UNIXTIME(date), NOW()) = 0";
 		try {
-			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			PreparedStatement stmt = Spinalvote.prepareStatement(query);
 			stmt.setString(1, uuid);
 			ResultSet rs = stmt.executeQuery();
 			rs.first();
@@ -152,7 +150,7 @@ public class SpinalvoteListener implements Listener{
 		String query = "CALL CONSECUTIVEVOTES(?)";
 		int i = 1;
 		try {
-			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			PreparedStatement stmt = Spinalvote.prepareStatement(query);
 			stmt.setString(1, uuid);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next())

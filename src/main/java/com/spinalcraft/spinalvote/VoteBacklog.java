@@ -53,6 +53,7 @@ public class VoteBacklog implements Runnable{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return count;
 	}
 

@@ -14,8 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import com.spinalcraft.spinalpack.Co;
-import com.spinalcraft.spinalpack.Spinalpack;
 import com.spinalcraft.spinalvote.VoteRaffle.Winner;
 import com.spinalcraft.usernamehistory.UUIDFetcher;
 import com.vexsoftware.votifier.model.Vote;
@@ -34,11 +32,11 @@ public class VoteCommandExecutor implements CommandExecutor{
 			if(sender instanceof Player){
 				Player player = (Player)sender;
 				player.sendMessage("");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "You can support Spinalcraft by voting for us on different server lists. Currently we're listed on two websites:");
-				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://minecraft-server-list.com/server/177423/vote/");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "and");
-				player.sendMessage(Spinalpack.code(Co.BLUE) + "http://www.planetminecraft.com/server/spinalcraft/vote/");
-				player.sendMessage(Spinalpack.code(Co.GREEN) + "Vote for us on both sites and get a reward!");
+				player.sendMessage(ChatColor.GREEN + "You can support Spinalcraft by voting for us on different server lists. Currently we're listed on two websites:");
+				player.sendMessage(ChatColor.BLUE + "http://minecraft-server-list.com/server/177423/vote/");
+				player.sendMessage(ChatColor.GREEN + "and");
+				player.sendMessage(ChatColor.BLUE + "http://www.planetminecraft.com/server/spinalcraft/vote/");
+				player.sendMessage(ChatColor.GREEN + "Vote for us on both sites and get a reward!");
 				player.sendMessage("");
 				return true;
 			}
@@ -116,7 +114,7 @@ public class VoteCommandExecutor implements CommandExecutor{
 				String query = "SELECT username, c FROM (SELECT username, uuid, COUNT(*) as c " + "FROM Votes " + "WHERE MONTH(FROM_UNIXTIME(date)) = ? AND YEAR(FROM_UNIXTIME(DATE)) = ? AND uuid IS NOT NULL " + "GROUP BY uuid " + "ORDER BY username) as V";
 				
 				try {
-					PreparedStatement stmt = Spinalpack.prepareStatement(query);
+					PreparedStatement stmt = Spinalvote.prepareStatement(query);
 					stmt.setInt(1, month);
 					stmt.setInt(2, year);
 					ResultSet rs = stmt.executeQuery();
