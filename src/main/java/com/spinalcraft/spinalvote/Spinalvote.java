@@ -2,6 +2,7 @@ package com.spinalcraft.spinalvote;
 
 import com.spinalcraft.spinalpack.SpinalcraftPlugin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.HandlerList;
@@ -10,13 +11,15 @@ import org.bukkit.event.Listener;
 public class Spinalvote extends SpinalcraftPlugin{
 	
 	public static final int NUM_WEBSITES = 2;
-	ConsoleCommandSender console;
+	public ConsoleCommandSender console;
 	SpinalvoteListener voteListener;
 	CommandExecutor executor;
 	
 	@Override
 	public void onEnable(){
 		super.onEnable();
+		
+		console = Bukkit.getConsoleSender();
 		
 		voteListener = new SpinalvoteListener(this);
 		getServer().getPluginManager().registerEvents((Listener)voteListener,  this);
