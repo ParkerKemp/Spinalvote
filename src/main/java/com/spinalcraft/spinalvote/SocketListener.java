@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.newsclub.net.unix.AFUNIXServerSocket;
 import org.newsclub.net.unix.AFUNIXSocketAddress;
 
-import com.spinalcraft.spinalpack.Spinalpack;
+import com.spinalcraft.skull.SpinalcraftPlugin;
 
 public class SocketListener implements Runnable {
 	private Spinalvote plugin;
@@ -97,7 +97,7 @@ public class SocketListener implements Runnable {
 
 	private UUID uuidFromHash(String hash) throws SQLException {
 		String query = "SELECT uuid FROM VoteRewards WHERE hash = ? AND choice = 0";
-		PreparedStatement stmt = Spinalpack.prepareStatement(query);
+		PreparedStatement stmt = SpinalcraftPlugin.prepareStatement(query);
 		stmt.setString(1, hash);
 		ResultSet rs = stmt.executeQuery();
 		if (!rs.first())
@@ -109,7 +109,7 @@ public class SocketListener implements Runnable {
 
 	private void setChoice(String hash, int choice) throws SQLException {
 		String query = "UPDATE VoteRewards SET choice = ? WHERE hash = ?";
-		PreparedStatement stmt = Spinalpack.prepareStatement(query);
+		PreparedStatement stmt = SpinalcraftPlugin.prepareStatement(query);
 		stmt.setInt(1, choice);
 		stmt.setString(2, hash);
 		stmt.executeUpdate();
