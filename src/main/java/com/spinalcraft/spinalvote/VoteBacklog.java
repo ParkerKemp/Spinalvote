@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import com.spinalcraft.spinalpack.Spinalpack;
+import com.spinalcraft.skull.SpinalcraftPlugin;
 
 public class VoteBacklog implements Runnable{
 	
@@ -43,7 +43,7 @@ public class VoteBacklog implements Runnable{
 		int count = 0;
 		String query = "SELECT count(1) AS c FROM VoteRewards WHERE uuid = ? AND choice = 0";
 		try {
-			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			PreparedStatement stmt = SpinalcraftPlugin.prepareStatement(query);
 			
 			stmt.setString(1, player.getUniqueId().toString());
 			ResultSet rs = stmt.executeQuery();
@@ -62,7 +62,7 @@ public class VoteBacklog implements Runnable{
 		String query = "SELECT hash FROM VoteRewards WHERE uuid = ? AND choice = 0";
 		String hash = null;
 		try {
-			PreparedStatement stmt = Spinalpack.prepareStatement(query);
+			PreparedStatement stmt = SpinalcraftPlugin.prepareStatement(query);
 			stmt.setString(1, uuid);
 			ResultSet rs = stmt.executeQuery();
 			if(!rs.first())

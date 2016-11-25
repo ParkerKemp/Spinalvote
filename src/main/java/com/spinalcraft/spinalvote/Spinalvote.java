@@ -1,12 +1,12 @@
 package com.spinalcraft.spinalvote;
 
-import com.spinalcraft.spinalpack.SpinalcraftPlugin;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+
+import com.spinalcraft.skull.SpinalcraftPlugin;
 
 public class Spinalvote extends SpinalcraftPlugin{
 	
