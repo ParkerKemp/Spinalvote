@@ -63,7 +63,7 @@ public class SpinalvoteListener implements Listener{
 		if(!completeVotes(uuidString))
 			return;
 		
-		plugin.broadcastMessage(ChatColor.GOLD + username + " just voted for Spinalcraft! Type /vote to do the same and get a reward!");
+		plugin.broadcastMessage(plugin.config.announcementMessage.replace("{{USER}}", username));
 		
 		registerPendingReward(username, uuid);
 	}

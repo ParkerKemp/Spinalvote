@@ -3,6 +3,7 @@ package com.spinalcraft.spinalvote;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
@@ -12,8 +13,10 @@ public class Spinalvote extends SpinalcraftPlugin{
 	
 	public static final int NUM_WEBSITES = 2;
 	public ConsoleCommandSender console;
-	SpinalvoteListener voteListener;
-	CommandExecutor executor;
+	private SpinalvoteListener voteListener;
+	private CommandExecutor executor;
+	
+	public Config config;
 	
 	@Override
 	public void onEnable(){
@@ -35,6 +38,16 @@ public class Spinalvote extends SpinalcraftPlugin{
 		getCommand("claimreward").setExecutor(executor);
 		getCommand("voteraffle").setExecutor(executor);
 		//getCommand("testgive").setExecutor(executor);
+		
+		saveDefaultConfig();
+		loadConfig();
+	}
+	
+	private void loadConfig(){
+		reloadConfig();
+		FileConfiguration configuration = getConfig();
+		
+		config = new Config(configuration);
 	}
 	
 	private void createVoteTables(){
