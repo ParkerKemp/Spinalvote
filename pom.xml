@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 	<groupId>com.spinalcraft</groupId>
 	<artifactId>Spinalvote</artifactId>
-	<version>1.0</version>
+	<version>1.1.0</version>
 	<name>Spinalvote</name>
 	
 	<properties>
@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>com.spinalcraft</groupId>
 			<artifactId>Skull</artifactId>
-			<version>1.0.2</version>
+			<version>1.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.spinalcraft</groupId>
