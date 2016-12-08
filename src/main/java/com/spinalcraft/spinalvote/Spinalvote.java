@@ -10,7 +10,7 @@ import com.spinalcraft.skull.SpinalcraftPlugin;
 
 public class Spinalvote extends SpinalcraftPlugin{
 	
-	public static final int NUM_WEBSITES = 2;
+	public static final int NUM_WEBSITES = 1;
 	public ConsoleCommandSender console;
 	SpinalvoteListener voteListener;
 	CommandExecutor executor;
