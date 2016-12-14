@@ -80,7 +80,6 @@
 							<minimizeJar>true</minimizeJar>
 							<artifactSet>
 								<includes>
-									<include>org.newsclub:junixsocket</include>
 								</includes>
 							</artifactSet>
 						</configuration>
