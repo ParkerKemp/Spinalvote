@@ -19,12 +19,6 @@ public class Spinalvote extends SpinalcraftPlugin{
 	public void onEnable(){
 		super.onEnable();
 		
-		try {
-			this.getClassLoader().loadClass("org.newsclub.net.unix.AFUNIXServerSocket");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
 		console = Bukkit.getConsoleSender();
 		
 		voteListener = new SpinalvoteListener(this);
@@ -41,6 +35,11 @@ public class Spinalvote extends SpinalcraftPlugin{
 		getCommand("claimreward").setExecutor(executor);
 		getCommand("voteraffle").setExecutor(executor);
 		//getCommand("testgive").setExecutor(executor);
+	}
+	
+	@Override
+	protected String[] getPreemptiveClassNames(){
+		return new String[] {"org.newsclub.net.unix.AFUNIXServerSocket"};
 	}
 	
 	private void createVoteTables(){
