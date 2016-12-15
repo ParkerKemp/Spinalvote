@@ -1,6 +1,6 @@
-name: ${projectName}
+name: ${project.name}
 main: com.spinalcraft.spinalvote.Spinalvote
-version: ${projectVersion}
+version: ${project.version}
 
 depend: [Votifier, UsernameHistory]
 
