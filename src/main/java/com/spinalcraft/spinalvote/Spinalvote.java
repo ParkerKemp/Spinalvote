@@ -19,6 +19,12 @@ public class Spinalvote extends SpinalcraftPlugin{
 	public void onEnable(){
 		super.onEnable();
 		
+		try {
+			this.getClassLoader().loadClass("org.newsclub.net.unix.AFUNIXServerSocket");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		console = Bukkit.getConsoleSender();
 		
 		voteListener = new SpinalvoteListener(this);
