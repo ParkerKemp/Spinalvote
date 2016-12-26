@@ -111,8 +111,9 @@ public class VoteCommandExecutor implements CommandExecutor{
 					sender.sendMessage("Value of year must be bigger than 2000");
 					return true;
 				}
-				String query = "SELECT username, c FROM (SELECT username, uuid, COUNT(*) as c " + "FROM Votes " + "WHERE MONTH(FROM_UNIXTIME(date)) = ? AND YEAR(FROM_UNIXTIME(DATE)) = ? AND uuid IS NOT NULL " + "GROUP BY uuid " + "ORDER BY username) as V";
-				
+				String query = "SELECT username, uuid, COUNT(*) as c " + "FROM Votes " + 
+						"WHERE MONTH(FROM_UNIXTIME(date)) = ? AND YEAR(FROM_UNIXTIME(DATE)) = ? AND uuid IS NOT NULL " + 
+						"GROUP BY uuid, username";
 				try {
 					PreparedStatement stmt = Spinalvote.prepareStatement(query);
 					stmt.setInt(1, month);
